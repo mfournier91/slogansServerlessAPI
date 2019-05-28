@@ -7,12 +7,12 @@ export async function main(event, context) {
     try {
         var request = await ssm.getParameter({ Name: 'nounslength', WithDecryption: false }).promise()
         var max = parseInt(request.Parameter.Value)
-        var nounLen = Math.floor(Math.random() * max) + 1;  
+        var nounLen = Math.floor(Math.random() * max) + 1;
 
     } catch (e) {
-        return failure({ error: "Nouns length parameter failed"})
+        return failure({ error: "Nouns length parameter failed" })
     }
-  const params = {
+    const params = {
         TableName: "nouns",
         Key: {
             id: nounLen,

@@ -46,24 +46,24 @@ functions:
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
   # - authorizer: authenticate using the AWS IAM role
-  create:
-    handler: create.main
+  createNoun:
+    handler: createNoun.main
     events:
       - http:
           path: nouns
           method: post
           cors: true
           authorizer: aws_iam
-  seedcreate:
-    handler: seedCreate.main
+  seedCreateNoun:
+    handler: seedCreateNoun.main
     events:
       - http:
           path: nouns/seed
           method: post
           cors: true
           authorizer: aws_iam
-  getnoun:
-    handler: getnoun.main
+  getNoun:
+    handler: getNoun.main
     events:
       - http:
           path: nouns/{id}
