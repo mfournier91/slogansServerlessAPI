@@ -26,17 +26,28 @@ provider:
       Action:
         - dynamodb:DescribeTable
         - dynamodb:Query
-        - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:us-east-1:645983975082:table/nouns"
     - Effect: Allow
       Action:
         - ssm:GetParameter
         - ssm:GetParameters
-      Resource: "arn:aws:ssm:us-east-1:645983975082:parameter/*"
+        - ssm:PutParameter
+      Resource: "arn:aws:ssm:us-east-1:645983975082:parameter/nounslength"
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:us-east-1:645983975082:table/adjectives"
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+        - ssm:GetParameters
+        - ssm:PutParameter
+      Resource: "arn:aws:ssm:us-east-1:645983975082:parameter/adjectiveslength"
     
 
 functions:
@@ -54,35 +65,35 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  seedCreateNoun:
-    handler: seedCreateNoun.main
-    events:
-      - http:
-          path: nouns/seed
-          method: post
-          cors: true
-          authorizer: aws_iam
+  # seedCreateNoun:
+  #   handler: seedCreateNoun.main
+  #   events:
+  #     - http:
+  #         path: nouns/seed
+  #         method: post
+  #         cors: true
+  #         authorizer: aws_iam
   getNoun:
     handler: getNoun.main
     events:
       - http:
-          path: nouns/{id}
+          path: nouns/rand
           method: get
           cors: true
           authorizer: aws_iam
-  seedCreateAdjective:
-    handler: seedCreateAdjective.main
-    events:
-      - http:
-          path: adjectives/seed
-          method: post
-          cors: true
-          authorizer: aws_iam
+  # seedCreateAdjective:
+  #   handler: seedCreateAdjective.main
+  #   events:
+  #     - http:
+  #         path: adjectives/seed
+  #         method: post
+  #         cors: true
+  #         authorizer: aws_iam
   getAdjective:
     handler: getAdjective.main
     events:
       - http:
-          path: adjectives/{id}
+          path: adjectives/rand
           method: get
           cors: true
           authorizer: aws_iam
@@ -94,3 +105,8 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}
