@@ -78,3 +78,19 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  getAdjective:
+    handler: getAdjective.main
+    events:
+      - http:
+          path: adjectives/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+  createAdjective:
+    handler: createAdjective.main
+    events:
+      - http:
+          path: adjectives
+          method: post
+          cors: true
+          authorizer: aws_iam
