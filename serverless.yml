@@ -80,7 +80,6 @@ functions:
           path: nouns/rand
           method: get
           cors: true
-          authorizer: aws_iam
   # seedCreateAdjective:
   #   handler: seedCreateAdjective.main
   #   events:
@@ -96,7 +95,6 @@ functions:
           path: adjectives/rand
           method: get
           cors: true
-          authorizer: aws_iam
   createAdjective:
     handler: createAdjective.main
     events:
